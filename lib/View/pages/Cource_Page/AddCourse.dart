@@ -9,6 +9,7 @@ import 'package:admaindashboard/config_Customer/size_phone.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:loading_overlay_pro/loading_overlay_pro.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 class Course extends StatefulWidget {
@@ -181,12 +182,16 @@ class _CourseState extends State<Course> {
     );
   }
   Container textfield(String title,Icon icon,TextEditingController control){
+
     return  Container(
       child: TextFormField(
+autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: control,
           validator: (val){
             if(val!.isEmpty)
               return 'الحقل مطلوب';
+            else if(control==name&&val.isNum)
+            return 'لا تدخل رقم';
           }
           ,
           onSaved: (val){
@@ -197,7 +202,6 @@ class _CourseState extends State<Course> {
           keyboardType:title=="أدخل رابط محتوى الكورس"?TextInputType.multiline:TextInputType.text,
           maxLines: title=="أدخل رابط محتوى الكورس"?4:1,
           decoration: InputDecoration(
-
             filled: true,
             fillColor: Colors.white,
             prefixIcon: icon,

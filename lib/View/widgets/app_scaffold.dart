@@ -26,13 +26,11 @@ class AppScaffold extends StatelessWidget {
           child: Scaffold(
             backgroundColor: backgroundColor,
             appBar: AppBar(
-              leading:Builder(
-            builder: (BuildContext context) {
-    return IconButton(
-    icon: const Icon(Icons.menu),
-    onPressed: () { Scaffold.of(context).openDrawer(); },
-    tooltip: "",
-    );}),
+    //           leading:Builder(
+    //         builder: (BuildContext context) {
+    // return TextButton(
+    // tooltip: "", onPressed: () {  }, icon: null,
+    // );}),
               // when the app isn't displaying the mobile version of app, hide the menu button that is used to open the navigation drawer
               automaticallyImplyLeading: displayMobileLayout,
               centerTitle: true,

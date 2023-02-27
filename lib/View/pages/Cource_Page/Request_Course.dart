@@ -26,43 +26,49 @@ class _Request_CourseState extends State<Request_Course> {
       textDirection: TextDirection.rtl,
       child: AppScaffold(
           pageTitle: PageTitles.Request_Course,
-          body: SingleChildScrollView(
-            child: Container(
-              color: backgroundColor,
-              child: Column(
-                children: [
-                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                   children: [
-                     VerticalDivider(thickness: 3,width: 3,),
-                   Text("تصنيف الكورس",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
-                   VerticalDivider(thickness: 3,width: 3,),
-                   Text("طالب الكورس",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
-                 ],),
-                  Container(
-                    height: size_phone.height,
-                    child: StreamBuilder(
-                      stream: AddCourse_controller().All_Reuest,
-                      builder: (context,snapshots){
-                        if(snapshots.hasData)
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Container(
+                  color: backgroundColor,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top:30),
+                        height: size_phone.height,
+                        child: StreamBuilder(
+                          stream: AddCourse_controller().All_Reuest,
+                          builder: (context,snapshots){
+                            if(snapshots.hasData)
+                              return ListRequestCourse(snapshots);
+                            else
+                              return Align(
+                                alignment: Alignment.topCenter,
+                                child: CircularProgressIndicator(
+                                  color: ColorForm,
+                                  strokeWidth: 4,
+                                ),
+                              );
 
-                          return ListRequestCourse(snapshots);
-                        else
-                          return Align(
-                            alignment: Alignment.topCenter,
-                            child: CircularProgressIndicator(
-                              color: ColorForm,
-                              strokeWidth: 4,
-                            ),
-                          );
+                          },
+                        ),
+                      )
 
-                      },
-                    ),
-                  )
-
-                  // ListViewUser()
-                ],
+                      // ListViewUser()
+                    ],
+                  ),
+                ),
               ),
-            ),
+              Container(
+                  color: ColorForm.withOpacity(.1),
+                  child:    Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+
+                  Text("تصنيف الكورس",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
+                  Text("طالب الكورس",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
+                  Text("تفاصيل",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
+                ],),)
+            ],
           )),
     );
   }

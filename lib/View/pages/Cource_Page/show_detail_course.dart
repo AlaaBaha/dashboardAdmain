@@ -98,7 +98,7 @@ class _show_detail_courseState extends State<show_detail_course> {
                   Container(
                       height: size_phone.defualtsize!*10,
                       width: size_phone.defualtsize!*25,
-                      child: Text(data['think'],style: Text_Style().StyleFount(size:size_phone.defualtsize!*1.3, fountFamily: "body", color: Colors.white),)),
+                      child: Text(data['think'],style: Text_Style().StyleFount(size:size_phone.defualtsize!*1.2, fountFamily: "body", color: Colors.white),)),
 
                 ],),
                 Spacer(),
@@ -113,7 +113,7 @@ class _show_detail_courseState extends State<show_detail_course> {
                               downnload=true;
                             });
 
-                            AddCourse_controller().EmailOpen("alaaazhari16@gmail.com",'لقد تم الموافقة علي طلب كورس تدريب ${data['catalog']} قم بالدخول  الي  الكورسات في الموقع').whenComplete((){
+                            AddCourse_controller().EmailOpen(data['User_Email'],'لقد تم الموافقة علي طلب كورس تدريب ${data['catalog']} قم بالدخول  الي  الكورسات في الموقع').whenComplete((){
                               Navigator.popAndPushNamed(context, RouteNames.Request_Course);
                               AddCourse_controller().DeleteCourse(snapshots.data!.docs[0].id, context);
                             });
@@ -126,7 +126,7 @@ class _show_detail_courseState extends State<show_detail_course> {
                           setState(() {
                             downnload=true;
                           });
-                            AddCourse_controller().EmailOpen("alaaazhari16@gmail.com",'لقد تم الرفض علي طلب كورس تدريب ${data['catalog']}قم بادخال البيانات الصحيحة').whenComplete((){
+                            AddCourse_controller().EmailOpen(data['User_Email'],'لقد تم الرفض علي طلب كورس تدريب ${data['catalog']}قم بادخال البيانات الصحيحة').whenComplete((){
                               Navigator.popAndPushNamed(context, RouteNames.Request_Course);
                               AddCourse_controller().DeleteCourse(snapshots.data!.docs[0].id, context);
                             });
@@ -151,7 +151,7 @@ class _show_detail_courseState extends State<show_detail_course> {
       //mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(text,style: Text_Style().StyleFount(size:size_phone.defualtsize!*1.5, fountFamily: "body", color: Colors.black),),
-        Text(val,style: Text_Style().StyleFount(size:size_phone.defualtsize!*1.4, fountFamily: "body", color: Colors.white),),
+        Text(val,style: Text_Style().StyleFount(size:size_phone.defualtsize!*1.4, fountFamily: "body", color: Colors.black87),),
       ],);
   }
 }

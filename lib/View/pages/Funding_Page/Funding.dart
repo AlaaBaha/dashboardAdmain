@@ -24,46 +24,54 @@ class _FundingState extends State<Funding> {
       textDirection: TextDirection.rtl,
       child: AppScaffold(
           pageTitle: PageTitles.Funding,
-          body: SingleChildScrollView(
-            child: Container(
-              color: backgroundColor,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Container(
+                  margin: EdgeInsets.only(top:30),
+                  color: backgroundColor,
+                  child: Column(
                     children: [
+                      Container(
+                        height: size_phone.height,
+                        child: StreamBuilder(
+                          stream: funding_controller().Allfunding_Request,
+                          builder: (context,snapshots){
+                            if(snapshots.hasData)
+                              return ListRequestfunding(snapshots);
+                            else
+                              return Align(
+                                alignment: Alignment.topCenter,
+                                child: CircularProgressIndicator(
+                                  color: ColorForm,
+                                  strokeWidth: 4,
+                                ),
+                              );
 
-                      Text("طالب التمويل ",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
-                      Text("قيمة التمويل",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
-                      Text("",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
+                          },
+                        ),
+                      )
 
-
+                      // ListViewUser()
                     ],
                   ),
-                  Container(
-                    height: size_phone.height,
-                    child: StreamBuilder(
-                      stream: funding_controller().Allfunding_Request,
-                      builder: (context,snapshots){
-                        if(snapshots.hasData)
-                          return ListRequestfunding(snapshots);
-                        else
-                          return Align(
-                            alignment: Alignment.topCenter,
-                            child: CircularProgressIndicator(
-                              color: ColorForm,
-                              strokeWidth: 4,
-                            ),
-                          );
-
-                      },
-                    ),
-                  )
-
-                  // ListViewUser()
-                ],
+                ),
               ),
-            ),
+              Container(
+                color: ColorForm.withOpacity(.1),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+
+                    Text("طالب التمويل ",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
+                    Text("قيمة التمويل",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
+                    Text("تفاصيل",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
+
+
+                  ],
+                ),
+              ),
+            ],
           )),
     );
   }
@@ -97,8 +105,8 @@ class _FundingState extends State<Funding> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(data['nameuser'],style: Text_Style().StyleFount(size: size_phone.defualtsize!*1.5, fountFamily: "body", color: Colors.white),),
-                Text(data['price_Fun'].toString(),style: Text_Style().StyleFount(size: size_phone.defualtsize!*1.5, fountFamily: "body", color: Colors.white),),
+                Text(data['nameuser'],style: Text_Style().StyleFount(size: size_phone.defualtsize!*1.3, fountFamily: "body", color: Colors.white),),
+                Text(data['price_Fun'].toString(),style: Text_Style().StyleFount(size: size_phone.defualtsize!*1.3, fountFamily: "body", color: Colors.white),),
                 Customer_config.CustomerButton("عرض",
                     Colors.white, Colors.black, size_phone.defualtsize!*2, size_phone.defualtsize!!*3.5, () {
                       show_detail_funding.fundingID= data['fun_id'];

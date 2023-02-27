@@ -87,7 +87,7 @@ class loginState extends State<login> {
           Text('  تسجيل الدخول',style: TextStyle(color: Colors.black87,fontFamily: 'header',fontWeight: FontWeight.bold,fontSize: 20)),
           textfield('أدخل  الايميل', Icons.email_outlined,Email),
           textfield('أدخل  كلمة  السر', Icons.remove_red_eye_outlined,password),
-          Customer_config.CustomerButton('دخول ',ColorForm,Colors.white,size_phone.defualtsize!*2,size_phone.defualtsize!*10,
+          Customer_config.CustomerButton('دخول ',ColorForm,Colors.white,size_phone.defualtsize!*3,size_phone.defualtsize!*10,
                   ()async{
 
             if(_key.currentState!.validate()){
@@ -132,6 +132,8 @@ class loginState extends State<login> {
       right:  size_phone.defualtsize!*6.5,
       bottom:  size_phone.defualtsize!*2),
       child: TextFormField(
+
+          autovalidateMode: AutovalidateMode.onUserInteraction,
         obscureText:controller==Email?false:true,
         keyboardType: controller==Email?TextInputType.text:TextInputType.visiblePassword,
           controller: controller,
@@ -155,13 +157,13 @@ class loginState extends State<login> {
             floatingLabelStyle:TextStyle(fontSize: 20,fontFamily: 'body',fontWeight:FontWeight.normal,color:
             Colors.white),
             filled: true,
-              fillColor: ColorForm,
+              fillColor:  Colors.white,
 
-              prefixIcon:Icon(color: Colors.white,icon),
+              prefixIcon:Icon(color: ColorForm,icon),
               hintText: title,
               hintStyle: TextStyle(fontSize: 20,fontFamily: 'body',fontWeight:FontWeight.bold,color:
-              Colors.white),
-              focusColor: Color.fromRGBO(242, 246, 246, 1.0),
+              ColorForm),
+              focusColor: ColorForm,
               disabledBorder:border(),
             enabledBorder: border(),
             border: border(),

@@ -136,7 +136,7 @@ class registerState extends State<register> {
           right:  size_phone.defualtsize!*6.5,
           bottom:  size_phone.defualtsize!*2),
       child:TextFormField(
-
+autovalidateMode: AutovalidateMode.onUserInteraction,
           obscureText:controller==Email?false:true,
           keyboardType: controller==Email?TextInputType.text:TextInputType.visiblePassword,
         controller: controller,
@@ -170,15 +170,15 @@ class registerState extends State<register> {
             errorBorder: border(),
             focusedBorder: border(),
             floatingLabelStyle:TextStyle(fontSize: 20,fontFamily: 'body',fontWeight:FontWeight.normal,color:
-            Colors.white),
+            ColorForm),
             filled: true,
-            fillColor: ColorForm,
+            fillColor: Colors.white,
 
-            prefixIcon:Icon(color: Colors.white,icon),
+            prefixIcon:Icon(color: ColorForm,icon),
             hintText: title,
             hintStyle: TextStyle(fontSize: 20,fontFamily: 'body',fontWeight:FontWeight.bold,color:
-            Colors.white),
-            focusColor: Color.fromRGBO(242, 246, 246, 1.0),
+            ColorForm),
+            focusColor: ColorForm,
             disabledBorder:border(),
             enabledBorder: border(),
             border: border(),

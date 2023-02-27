@@ -23,14 +23,9 @@ class HomePage extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: size_phone.width!<=850?  size_phone.height!*1.3: size_phone.height!*.5,
+                    height: size_phone.height,
                     width: size_phone.width,
                     child: analysis_section(),
-                  ),
-                  Container(
-                    height: size_phone.height!/2,
-                    width: size_phone.width,
-                    child: user_display(),
                   ),
                 ],
               ),

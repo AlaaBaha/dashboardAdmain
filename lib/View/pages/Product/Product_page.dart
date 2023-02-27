@@ -22,53 +22,60 @@ class _Product_pageState extends State<Product_page> {
       textDirection: TextDirection.rtl,
       child: AppScaffold(
           pageTitle: PageTitles.Product,
-          body: SingleChildScrollView(
-            child:Container(
-              color: backgroundColor,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                child:Container(
+                  margin: EdgeInsets.only(top: 30),
+                  color: backgroundColor,
+                  child: Column(
                     children: [
-                      VerticalDivider(thickness: 3,width: 3,),
-                      Text("",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
-                      VerticalDivider(thickness: 3,width: 3,),
-                      Text("اسم المنتج",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
-                      if(size_phone.width!>900)VerticalDivider(thickness: 3,width: 3,),
-                      if(size_phone.width!>900) Text("مالك المنتج",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
-                      if(size_phone.width!>900)VerticalDivider(thickness: 3,width: 3,),
-                      if(size_phone.width!>900)Text("تصنيف المنتج",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
-                      if(size_phone.width!>900)VerticalDivider(thickness: 3,width: 3,),
-                      Text("سعرالمنتج",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
-                      VerticalDivider(thickness: 3,width: 3,),
-                      Text("",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
-                      VerticalDivider(thickness: 3,width: 3,),
+                      Container(
+                        height: size_phone.height,
+                        child: StreamBuilder(
+                          stream:product_controller().AllProduct,
+                          builder: (context,snapshots){
+                            if(snapshots.hasData)
+                              return ListProduct(snapshots);
+                            else
+                              return Align(
+                                alignment: Alignment.topCenter,
+                                child: CircularProgressIndicator(
+                                  color: ColorForm,
+                                  strokeWidth: 4,
+                                ),
+                              );
+
+                          },
+                        ),
+                      )
+
+                      // ListViewUser()
                     ],
                   ),
-                  Container(
-                    height: size_phone.height,
-                    child: StreamBuilder(
-                      stream:product_controller().AllProduct,
-                      builder: (context,snapshots){
-                        if(snapshots.hasData)
-                          return ListProduct(snapshots);
-                        else
-                          return Align(
-                            alignment: Alignment.topCenter,
-                            child: CircularProgressIndicator(
-                              color: ColorForm,
-                              strokeWidth: 4,
-                            ),
-                          );
-
-                      },
-                    ),
-                  )
-
-                  // ListViewUser()
-                ],
+                ),
               ),
-            ),
+              Container(
+                color: ColorForm.withOpacity(.1),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text("",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
+
+                    Text("اسم المنتج",style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.black),),
+
+                    if(size_phone.width!>900) Text("مالك المنتج",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
+
+                    if(size_phone.width!>900)Text("تصنيف المنتج",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
+
+                    Text("سعرالمنتج",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
+
+                    Text("",style: Text_Style().StyleFount(size: 20, fountFamily: "body", color: Colors.black),),
+
+                  ],
+                ),
+              ),
+            ],
           )),
     );
   }

@@ -3,8 +3,10 @@ import 'package:admaindashboard/Controller/home_controller/Anaysis_Controller.da
 import 'package:admaindashboard/Model/analysis_model/analysis.dart';
 import 'package:admaindashboard/config_Customer/Color.dart';
 import 'package:admaindashboard/config_Customer/size_phone.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../../../Controller/cource_controller/AddCourse_controller.dart';
 import '../../widgets/Text_Style.dart';
 class analysis_section extends StatefulWidget {
   const analysis_section({Key? key}) : super(key: key);
@@ -22,52 +24,77 @@ class _analysis_sectionState extends State<analysis_section> {
     print(size_phone.width);
    return  Scaffold(
      backgroundColor: Colors.white,
-      body: Container(
-        child: GridView(
-          padding: EdgeInsets.all(size_phone.width!<=500?size_phone.defualtsize!*11:0),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: size_phone.width!<=850?1:2,
-          childAspectRatio:size_phone.width!<=500?0.7:1.5),
+      body: Column(
           children: [
-            Container(
-              width: size_phone.width!/2,
-              child:  PieChart(
-                  PieChartData(
-                      centerSpaceRadius: 100,
-                      centerSpaceColor:Colors.white,
-                      borderData: FlBorderData(show: true),
-                      sections: [
-                        pieDetail(5, Icons.monetization_on,colorsFunding),
-                        // pieDetail( 5,Icons.category,ColorCourse),
-                        //  pieDetail( 5, Icons.shopping_cart,ColorProduct),
-                        //  pieDetail(5, Icons.person,drawerColor),
-                      ]))),
-            Center(
-                child:  Column(
-                  children: [
-Spacer(),
-                    detailChart("          طلبات التمويل   ",Icons.monetization_on,colorsFunding,analysis_model.Fund),
-                    detailChart("          طلبات التدريب   ",Icons.category,ColorCourse,analysis_model.Cour),
-                    detailChart("عدد المنتجات المنصة   ",Icons.shopping_cart,ColorProduct,analysis_model.prod),
-                    detailChart("عدد مستخدمين النظام   ",Icons.person,ColorUser, analysis_model.user),
-                    Spacer(),
-                  ],
-                )),
+       Expanded(child: Row(children: [
+         detailChart("product","عدد المنتجات"),
+         detailChart("user","عدد المستخدمين")
+       ],)),
+            Expanded(child: Row(children: [
+              detailChart("Request_Funding","طلبات التمويل "),
+              detailChart("RequestTraining","طلبات التسويق")
+            ],)),
           ],
 
 
         ),
-      ),
+
     );
   }
-  detailChart(String text,IconData icon,Color color,int num){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Icon(icon,color: color,),
-      Text(text,style: Text_Style().StyleFount(size: 25, fountFamily: "body", color: ColorUser),),
-        Text(num.toString(),style: Text_Style().StyleFount(size: 25, fountFamily: "body", color: ColorUser),),
+  detailChart(String NameDB,String title){//"product"
+    return  Expanded(
+      child: Column(
+        children: [StreamBuilder(
+            stream:FirebaseFirestore.instance.collection(NameDB).snapshots(),
+            builder: (context,snapshots){
+              if(snapshots.hasData)
+                return Container(
+                  margin: EdgeInsets.only(top:  size_phone.defualtsize!*2,right:  size_phone.defualtsize!*3,left:  size_phone.defualtsize!*1,
+                  bottom:  size_phone.defualtsize!*1),
+                  padding: EdgeInsets.all( size_phone.defualtsize!*1),
+                  height: size_phone.defualtsize!*10,
+                  width: size_phone.defualtsize!*20,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular( size_phone.defualtsize!*1),
+                      color: ColorForm,
+                      boxShadow: [BoxShadow(
+                        color: Colors.black26,
+                        offset: Offset(1,3),
+                        spreadRadius: 5,
+                        blurRadius: 10
+                      )]
+                  ),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(title,style: Text_Style().StyleFount(size: size_phone.defualtsize!*2, fountFamily: "body", color: Colors.white),)
 
-    ],);
+                          ],),
+SizedBox(width: size_phone.defualtsize!*3.5,),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text((snapshots.data!.docs.length).toString(),style: Text_Style().StyleFount(size: size_phone.defualtsize!*5, fountFamily: "body", color: Colors.white),)
+
+
+                            ]),
+                      ],
+                    ),
+                  ),
+                );
+              else
+                return Center(child:  CircularProgressIndicator(
+                  strokeWidth: 4,
+                  color: ColorForm,
+                ));
+            })],
+      ),
+    );
   }
   pieDetail(double val,IconData icon,Color color,){
     return PieChartSectionData(

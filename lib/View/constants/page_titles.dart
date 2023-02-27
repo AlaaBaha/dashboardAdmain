@@ -7,4 +7,5 @@ class PageTitles {
   static const String logout = 'تسجيل خروج';
   static const String detail_course = 'تفاصيل طلب كورس التدريب';
   static const String detail_funding = 'تفاصيل طلب التمويل';
+  static const String user = 'المستخدمين';
 }

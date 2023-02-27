@@ -28,11 +28,11 @@ class show_detail_fundingeState extends State<show_detail_funding> {
     size_phone().init(context);
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Stack(
-        children: [
-          AppScaffold(
+      child: AppScaffold(
               pageTitle: PageTitles.detail_funding,
-              body: SingleChildScrollView(
+              body:Stack(
+                children: [
+                  SingleChildScrollView(
                 child: Container(
                   color: backgroundColor,
                   child: show_detail_funding.fundingID==""&&show_detail_funding.fundingID==null?
@@ -53,7 +53,7 @@ class show_detail_fundingeState extends State<show_detail_funding> {
                     },
                   ),
                 ),
-              )),
+              ),
           if(downnload)  Container(
               color: Colors.grey.withOpacity(.1),
               height: size_phone.height,
@@ -66,9 +66,8 @@ class show_detail_fundingeState extends State<show_detail_funding> {
                   isLoading: downnload, child: Text('')
               )
           ),
-        ],
-      ),
-    );
+     ] ),
+    ));
   }
   ListFunding(snapshots,BuildContext context) {
     var data=snapshots.data!.data();
@@ -80,7 +79,7 @@ class show_detail_fundingeState extends State<show_detail_funding> {
           height: size_phone.defualtsize!*30,
           width: size_phone.defualtsize!*30,
           decoration: BoxDecoration(
-              color: ColorForm
+              color: ColorForm.withOpacity(.8)
           ),
           child: Column(
             children: [
@@ -88,10 +87,11 @@ class show_detail_fundingeState extends State<show_detail_funding> {
               detailitem("  الاسم  :",data['nameuser']),
               Row(children: [
                 detailitem("  اثبات الشخصية للمستخدم ؟  :",""),
-                TextButton(onPressed: (){
-                  funding_controller().openLink(data["provFile"]);
-                },
-                    child: Text("قم بتحميل الملف "))
+                Builder(
+                  builder: (BuildContext context) { return IconButton(onPressed: () {     funding_controller().openLink(data["provFile"]);},
+                    icon: Icon(Icons.download,color: Colors.white,),tooltip:"قم بتحميل الملف " ,); },),
+
+
               ],),
               detailitem("  مبلغ التمويل  :",data['price_Fun'].toString()),
               Column(
@@ -100,7 +100,7 @@ class show_detail_fundingeState extends State<show_detail_funding> {
                   Container(
                       height: size_phone.defualtsize!*10,
                       width: size_phone.defualtsize!*25,
-                      child: Text(data['describe'],style: Text_Style().StyleFount(size:20, fountFamily: "tahmoe", color: Colors.white),)),
+                      child: Text(data['describe'],style: Text_Style().StyleFount(size:19, fountFamily: "tahmoe", color: Colors.black87),)),
 
                 ],),
               Spacer(),
@@ -142,8 +142,8 @@ class show_detail_fundingeState extends State<show_detail_funding> {
     return  Row(
       //mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Text(text,style: Text_Style().StyleFount(size:22, fountFamily: "body", color: Colors.white),),
-        Text(val,style: Text_Style().StyleFount(size:20, fountFamily: "body", color: Colors.black),),
+        Text(text,style: Text_Style().StyleFount(size:22, fountFamily: "body", color: Colors.black),),
+        Text(val,style: Text_Style().StyleFount(size:20, fountFamily: "body", color: Colors.black87),),
       ],);
   }
 }

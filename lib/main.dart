@@ -11,6 +11,7 @@ import 'package:admaindashboard/View/widgets/app_route_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'View/pages/home_element/home_page.dart';
+import 'View/pages/home_element/user_display.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +44,7 @@ void main() async{
       RouteNames.register: (_) => const register(),
       RouteNames.detail_Course: (_) =>  show_detail_course(),
       RouteNames.detail_funding: (_) =>  show_detail_funding(),
+      RouteNames.user: (_) =>  user_display(),
 
 
     },

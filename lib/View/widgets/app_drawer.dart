@@ -50,7 +50,7 @@ class _AppDrawerState extends State<AppDrawer> with RouteAware {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text('اهلا بك...', style: Text_Style().StyleFount(size: 23,
-                        fountFamily: "header", color: Colors.black),),
+                        fountFamily: "header", color: Colors.white),),
                        Text(email!, style: Text_Style().StyleFount(size: 22,
                            fountFamily: "body", color: Colors.white),)
                       ],
@@ -64,6 +64,7 @@ class _AppDrawerState extends State<AppDrawer> with RouteAware {
               pageRoute(Icons.category, RouteNames.Course,PageTitles.Course),
               pageRoute(Icons.shopping_cart, RouteNames.Product,PageTitles.Product),
               pageRoute(Icons.add_box_sharp, RouteNames.Request_Course,PageTitles.Request_Course),
+              pageRoute(Icons.person, RouteNames.user,PageTitles.user),
 
                   ListTileTheme(
                     iconColor: Color(0xffE7E7E7),

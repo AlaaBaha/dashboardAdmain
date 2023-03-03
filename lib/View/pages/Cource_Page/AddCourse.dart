@@ -89,7 +89,7 @@ class _CourseState extends State<Course> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(height: size_phone.defualtsize!*1,),
-                  textfield('أدخل اسم الكورس', Icon(Icons.person),name),
+                  textfield('أدخل اسم الكورس', Icon(Icons.discount_rounded),name),
 
                   SizedBox(height: size_phone.defualtsize!*1,),
                   Row(

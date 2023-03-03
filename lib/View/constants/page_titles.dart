@@ -8,4 +8,5 @@ class PageTitles {
   static const String detail_course = 'تفاصيل طلب كورس التدريب';
   static const String detail_funding = 'تفاصيل طلب التمويل';
   static const String user = 'المستخدمين';
+  static const String register = 'انشاء حساب ادمن جديد';
 }

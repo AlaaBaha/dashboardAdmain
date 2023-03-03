@@ -35,10 +35,10 @@ if(value.docs.length==1) {
   data = await value.docs[0].data();
   String temp=data['email'];
   print(temp);
-  UserCredential userCredential= await _auth.signInWithEmailAndPassword(email: temp, password: password).whenComplete(() => {
-    check= true
-  });
+
+  check=true;
 }});
+
    return check;
     }
 

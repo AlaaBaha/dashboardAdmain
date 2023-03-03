@@ -24,7 +24,7 @@ class show_detail_fundingeState extends State<show_detail_funding> {
   bool downnload=false;
   @override
   Widget build(BuildContext context) {
-    print(show_detail_funding.fundingID!);
+
     size_phone().init(context);
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -35,7 +35,7 @@ class show_detail_fundingeState extends State<show_detail_funding> {
                   SingleChildScrollView(
                 child: Container(
                   color: backgroundColor,
-                  child: show_detail_funding.fundingID==""&&show_detail_funding.fundingID==null?
+                  child:show_detail_funding.fundingID.isEmpty?
                   Container():
                   StreamBuilder(
                     stream: funding_controller().getFundingDetail(show_detail_funding.fundingID!),
@@ -74,12 +74,14 @@ class show_detail_fundingeState extends State<show_detail_funding> {
     return Center(
       child: Directionality(
         textDirection: TextDirection.rtl,
-        child: Container(
+        child:Container(
+          padding: EdgeInsets.only(top:size_phone.defualtsize!*2,right:10),
           margin: EdgeInsets.only(top:size_phone.defualtsize!*5 ),
           height: size_phone.defualtsize!*30,
           width: size_phone.defualtsize!*30,
           decoration: BoxDecoration(
-              color: ColorForm.withOpacity(.8)
+              color: ColorForm.withOpacity(.8),
+            borderRadius: BorderRadius.circular(5),
           ),
           child: Column(
             children: [
@@ -118,8 +120,8 @@ class show_detail_fundingeState extends State<show_detail_funding> {
               }),
                   Customer_config.CustomerButton("رفض",
                       Colors.white, Colors.black, size_phone.defualtsize!*2, size_phone.defualtsize!*4.5, () {
-                        Navigator.popAndPushNamed(context, RouteNames.Funding);
                         Alert_Config().Alert(fun: (){
+                          Navigator.popAndPushNamed(context, RouteNames.Funding);
                           AddCourse_controller().EmailOpen(data['email_user'],'لقد رفض  طلب تمويلك  ').whenComplete((){
                             funding_controller().DeleteFunding(snapshots.data!.id, context);
                           });
@@ -129,12 +131,9 @@ class show_detail_fundingeState extends State<show_detail_funding> {
                 ],),
               Spacer(),
             ],
-          ),),
-
-
-
-      ),
-    );
+          ),)
+        )
+      );
 
   }
 

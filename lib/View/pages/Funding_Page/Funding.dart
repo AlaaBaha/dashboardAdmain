@@ -8,6 +8,7 @@ import 'package:admaindashboard/View/widgets/Text_Style.dart';
 import 'package:admaindashboard/View/widgets/app_scaffold.dart';
 import 'package:admaindashboard/config_Customer/Color.dart';
 import 'package:admaindashboard/config_Customer/size_phone.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 class Funding extends StatefulWidget {
   const Funding({Key? key}) : super(key: key);
@@ -105,14 +106,15 @@ class _FundingState extends State<Funding> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(data['nameuser'],style: Text_Style().StyleFount(size: size_phone.defualtsize!*1.3, fountFamily: "body", color: Colors.white),),
-                Text(data['price_Fun'].toString(),style: Text_Style().StyleFount(size: size_phone.defualtsize!*1.3, fountFamily: "body", color: Colors.white),),
+                Text(data['nameuser'],style: Text_Style().StyleFount(size:22, fountFamily: "body", color: Colors.white),),
+                Text(data['price_Fun'].toString(),style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.white),),
                 Customer_config.CustomerButton("عرض",
                     Colors.white, Colors.black, size_phone.defualtsize!*2, size_phone.defualtsize!!*3.5, () {
                       show_detail_funding.fundingID= data['fun_id'];
                       Navigator.pushNamed(context,   RouteNames.detail_funding);
                     })
               ],)
+
         );
       },
       itemCount: snapshots.data!.docs.length,);

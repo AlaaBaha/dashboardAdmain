@@ -101,8 +101,8 @@ class _Request_CourseState extends State<Request_Course> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-          Text(data['catalog'],style: Text_Style().StyleFount(size: size_phone.defualtsize!*1.5, fountFamily: "body", color: Colors.white),),
-          Text(data['User_Email'],style: Text_Style().StyleFount(size: size_phone.defualtsize!*1.5, fountFamily: "body", color: Colors.white),),
+          Text(data['catalog'],style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.white),),
+          Text(data['User_Email'],style: Text_Style().StyleFount(size: 22, fountFamily: "body", color: Colors.white),),
           Customer_config.CustomerButton("عرض",
             Colors.white, Colors.black, size_phone.defualtsize!*2, size_phone.defualtsize!!*3.5, () {
               show_detail_course.courseID= data['think'];

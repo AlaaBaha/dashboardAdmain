@@ -83,61 +83,63 @@ class _show_detail_courseState extends State<show_detail_course> {
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Container(
-            margin: EdgeInsets.only(top:size_phone.defualtsize!*5 ),
-            height: size_phone.defualtsize!*20,
-            width: size_phone.defualtsize!*30,
-            decoration: BoxDecoration(
-                color: ColorForm
-            ),
-            child: Column(
-              children: [
-                detailitem("  الطلب من الايميل  :",data['User_Email']),
-                detailitem("  تصنيف طلب التدريب  :",data['catalog']),
-                Column(children: [
-                  Text(" توضيح لما يحتاجة من كورس للتدريب",style: Text_Style().StyleFount(size:size_phone.defualtsize!*1.3, fountFamily: "body", color: Colors.black),),
-                  Container(
-                      height: size_phone.defualtsize!*10,
-                      width: size_phone.defualtsize!*25,
-                      child: Text(data['think'],style: Text_Style().StyleFount(size:size_phone.defualtsize!*1.2, fountFamily: "body", color: Colors.white),)),
+             padding: EdgeInsets.only(top:size_phone.defualtsize!*1 ,right: 10),
+             margin: EdgeInsets.only(top:size_phone.defualtsize!*5 ),
+             height: size_phone.defualtsize!*20,
+             width: size_phone.defualtsize!*30,
+             decoration: BoxDecoration(
+                 color: ColorForm
+             ),
+             child: Column(
+               children: [
+                 detailitem("  الطلب من الايميل  :",data['User_Email']),
+                 detailitem("  تصنيف طلب التدريب  :",data['catalog']),
+                 Column(children: [
+                   Text(" توضيح لما يحتاجة من كورس للتدريب",style: Text_Style().StyleFount(size:size_phone.defualtsize!*1.3, fountFamily: "body", color: Colors.black),),
+                   Container(
+                       height: size_phone.defualtsize!*10,
+                       width: size_phone.defualtsize!*25,
+                       child: Text(data['think'],
+                         style: Text_Style().StyleFount(size:size_phone.defualtsize!*1.1, fountFamily: "body", color: Colors.black87),)),
+                 ],),
+                 Spacer(),
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
+                     Customer_config.CustomerButton("موافقة",
+                         Colors.white, Colors.black, size_phone.defualtsize!*2, size_phone.defualtsize!!*4.5, () {
+                           Alert_Config().Alert(fun: (){
+                             Navigator.pop(context);
+                             setState(() {
+                               downnload=true;
+                             });
 
-                ],),
-                Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Customer_config.CustomerButton("موافقة",
-                        Colors.white, Colors.black, size_phone.defualtsize!*2, size_phone.defualtsize!!*4.5, () {
-                          Alert_Config().Alert(fun: (){
-                            Navigator.pop(context);
-                            setState(() {
-                              downnload=true;
-                            });
+                             AddCourse_controller().EmailOpen(data['User_Email'],'لقد تم الموافقة علي طلب كورس تدريب ${data['catalog']} قم بالدخول  الي  الكورسات في الموقع').whenComplete((){
+                               Navigator.popAndPushNamed(context, RouteNames.Course);
+                               AddCourse_controller().DeleteCourse(snapshots.data!.docs[0].id, context);
+                             });
+                           }, context: context, title: "هل تريد الموافقة على الطلب", type: CoolAlertType.warning);
+                         }),
+                     Customer_config.CustomerButton("رفض",
+                         Colors.white, Colors.black, size_phone.defualtsize!*2, size_phone.defualtsize!!*4.5, () {
+                           Alert_Config().Alert(fun: (){
+                             Navigator.pop(context);
+                             setState(() {
+                               downnload=true;
+                             });
 
-                            AddCourse_controller().EmailOpen(data['User_Email'],'لقد تم الموافقة علي طلب كورس تدريب ${data['catalog']} قم بالدخول  الي  الكورسات في الموقع').whenComplete((){
-                              Navigator.popAndPushNamed(context, RouteNames.Request_Course);
-                              AddCourse_controller().DeleteCourse(snapshots.data!.docs[0].id, context);
-                            });
-                          }, context: context, title: "هل تريد الموافقة على الطلب", type: CoolAlertType.warning);
-                        }),
-                    Customer_config.CustomerButton("رفض",
-                        Colors.white, Colors.black, size_phone.defualtsize!*2, size_phone.defualtsize!*4.5, () {
-                          Alert_Config().Alert(fun: (){
-                            Navigator.pop(context);
-                          setState(() {
-                            downnload=true;
-                          });
-                            AddCourse_controller().EmailOpen(data['User_Email'],'لقد تم الرفض علي طلب كورس تدريب ${data['catalog']}قم بادخال البيانات الصحيحة').whenComplete((){
-                              Navigator.popAndPushNamed(context, RouteNames.Request_Course);
-                              AddCourse_controller().DeleteCourse(snapshots.data!.docs[0].id, context);
-                            });
-                          }, context: context, title: "هل تريد رفض الطلب", type: CoolAlertType.warning);
+    AddCourse_controller().EmailOpen(data['User_Email'],'لقد تم الرفض علي طلب كورس تدريب ${data['catalog']}قم بادخال البيانات الصحيحة').whenComplete((){
+    AddCourse_controller().DeleteCourse(snapshots.data!.docs[0].id, context);
+   // Navigator.popAndPushNamed(context, RouteNames.Course);
+    });
+                           }, context: context, title: "هل تريد الموافقة على الطلب", type: CoolAlertType.warning);
+                         }),
 
-                        }),
-                  ],),
-                Spacer(),
-              ],
-            ),),
 
+                   ],),
+                 Spacer(),
+               ],
+             ),)
 
 
         ),
@@ -145,7 +147,6 @@ class _show_detail_courseState extends State<show_detail_course> {
     return Container();
 
   }
-
   detailitem(String text,String val){
     return  Row(
       //mainAxisAlignment: MainAxisAlignment.spaceAround,

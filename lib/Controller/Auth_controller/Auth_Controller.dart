@@ -5,6 +5,7 @@ import 'package:admaindashboard/config_Customer/size_phone.dart';
 import"package:flutter/material.dart";
 import 'package:cool_alert/cool_alert.dart';
 import '../../model/Auth_Model/Auth_DB.dart';
+import '../ManageProvider/email.dart';
 
 class Auth_Controller{
   size_phone size=size_phone();
@@ -12,13 +13,14 @@ class Auth_Controller{
   SignUpAlert(BuildContext context,email, password, dynamic Function() param3 )async{
     String val=await auth.signUp(email, password);
     if(val=="true")
-      Alert_Config().Alert(
+     {email_Value.email=email;
+       Alert_Config().Alert(
           fun: (){
             Navigator.popAndPushNamed(context, RouteNames.home);
           },
           context: context,
           title: "تم انشاء الحساب",
-          type: CoolAlertType.success);
+          type: CoolAlertType.success);}
     else
       if(val=="The email address is already in use by another account."){
         Alert_Config().Alert(
@@ -45,6 +47,7 @@ class Auth_Controller{
     bool val= await auth.log(email, password);
     if(val)
     {
+      email_Value.email=email;
       Alert_Config().Alert(
         fun:  (){
           Navigator.popAndPushNamed(context, RouteNames.home);

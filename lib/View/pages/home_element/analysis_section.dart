@@ -17,91 +17,150 @@ class analysis_section extends StatefulWidget {
 
 class _analysis_sectionState extends State<analysis_section> {
 
-  double tempuser= analysis_model.user  as double;
+  int touchedIndex = -1;
+
   @override
   Widget build(BuildContext context) {
     size_phone().init(context);
     print(size_phone.width);
    return  Scaffold(
      backgroundColor: Colors.white,
-      body: Column(
-          children: [
-       Expanded(child: Row(children: [
-         detailChart("product","عدد المنتجات"),
-         detailChart("user","عدد المستخدمين")
-       ],)),
-            Expanded(child: Row(children: [
-              detailChart("Request_Funding","طلبات التمويل "),
-              detailChart("RequestTraining","طلبات التسويق")
-            ],)),
-          ],
+      body: SingleChildScrollView(
+        child: Column(
+         mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: size_phone.defualtsize!*2,),
+              Row(mainAxisAlignment: MainAxisAlignment.center,
+                children: [ detailChart("Request_Funding","طلبات التمويل ",colorsFunding,Icons.monetization_on),
+                  SizedBox(width: size_phone.defualtsize!*4,),
+                  detailChart("RequestTraining","طلبات التدريب",ColorCourse,Icons.add_box_sharp),],),
+
+              SizedBox(height: size_phone.defualtsize!*1,),
+       Row(mainAxisAlignment: MainAxisAlignment.center,
+         children: [     detailChart("product","عدد المنتجات",ColorProduct,Icons.shopping_cart),
+           SizedBox(width: size_phone.defualtsize!*4,),
+        detailChart("user","عدد المستخدمين",ColorForm,Icons.person),]),
 
 
-        ),
+              SizedBox(height:20,),
+              Align(
+                alignment: Alignment.bottomRight,
+                child:    SizedBox(
+                    child:
+                    Padding(
+                      padding:  EdgeInsets.only(right: 50),
+                      child: Column(
+                        children: [
+                          detatilPie("طلبات التمويل ",Icons.monetization_on),
+                          detatilPie("طلبات التدريب",Icons.add_box_sharp),
+                          detatilPie("عدد المنتجات",Icons.shopping_cart),
+                          detatilPie("عدد المستخدمين",Icons.person),
+                        ],
+                      ),
+                    )),
+              ),
 
-    );
-  }
-  detailChart(String NameDB,String title){//"product"
-    return  Expanded(
-      child: Column(
-        children: [StreamBuilder(
-            stream:FirebaseFirestore.instance.collection(NameDB).snapshots(),
-            builder: (context,snapshots){
-              if(snapshots.hasData)
-                return Container(
-                  margin: EdgeInsets.only(top:  size_phone.defualtsize!*2,right:  size_phone.defualtsize!*3,left:  size_phone.defualtsize!*1,
-                  bottom:  size_phone.defualtsize!*1),
-                  padding: EdgeInsets.all( size_phone.defualtsize!*1),
-                  height: size_phone.defualtsize!*10,
-                  width: size_phone.defualtsize!*20,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular( size_phone.defualtsize!*1),
-                      color: ColorForm,
-                      boxShadow: [BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(1,3),
-                        spreadRadius: 5,
-                        blurRadius: 10
-                      )]
-                  ),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(title,style: Text_Style().StyleFount(size: size_phone.defualtsize!*2, fountFamily: "body", color: Colors.white),)
-
-                          ],),
-SizedBox(width: size_phone.defualtsize!*3.5,),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text((snapshots.data!.docs.length).toString(),style: Text_Style().StyleFount(size: size_phone.defualtsize!*5, fountFamily: "body", color: Colors.white),)
+            ],
 
 
-                            ]),
-                      ],
-                    ),
-                  ),
-                );
-              else
-                return Center(child:  CircularProgressIndicator(
-                  strokeWidth: 4,
-                  color: ColorForm,
-                ));
-            })],
+          ),
       ),
+
     );
   }
-  pieDetail(double val,IconData icon,Color color,){
-    return PieChartSectionData(
-        value:val ,
+  detailChart(String NameDB,String title,Color color,IconData icon){//"product"
+    return  StreamBuilder(
+        stream:FirebaseFirestore.instance.collection(NameDB).snapshots(),
+        builder: (context,snapshots){
+          if(snapshots.hasData)
+            return Container(
+             margin: EdgeInsets.only(top:  size_phone.defualtsize!*.2,right:  size_phone.defualtsize!*.3,left:  size_phone.defualtsize!*.1,
+              bottom:  size_phone.defualtsize!*.1),
+              padding: EdgeInsets.all( size_phone.defualtsize!*1),
+              height: size_phone.defualtsize!*10,
+              width: size_phone.defualtsize!*10,
+child: PieChart(
+  PieChartData(
+    pieTouchData: PieTouchData(
+      touchCallback: (FlTouchEvent event, pieTouchResponse){
+            setState(() {
+            if (!event.isInterestedForInteractions ||
+            pieTouchResponse == null ||
+            pieTouchResponse.touchedSection == null) {
+            touchedIndex = -1;
+            return;
+            }
+            touchedIndex = pieTouchResponse
+                .touchedSection!.touchedSectionIndex;
+            });
+      },
+      enabled: true,
+
+    ),
+      sections: [PieChartSectionData(
+        titleStyle: Text_Style().StyleFount(size: 30, fountFamily: "body", color: Colors.white,),
+        radius:size_phone.defualtsize!*5 ,
+        badgeWidget: Icon(icon,color: Colors.white,size: 27,),
+        badgePositionPercentageOffset: .008,
         color: color,
-    badgeWidget: Icon(icon),
-    radius: 50,
+          title:(snapshots.data!.docs.length ).toString(),value:snapshots.data!.docs.length as double )]
+    // read about it in the PieChartData section
+  ),
+  swapAnimationDuration: Duration(milliseconds: 150), // Optional
+  swapAnimationCurve: Curves.linear, // Optional
+)
+//               decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.circular( size_phone.defualtsize!*1),
+//                   color: Colors.white,
+//                   boxShadow: [BoxShadow(
+//                     color: Colors.black26.withOpacity(.1),
+//                     offset: Offset(1,3),
+//                     spreadRadius: 5,
+//                     blurRadius: 10
+//                   )]
+//               ),
+//               child: SingleChildScrollView(
+//                 scrollDirection: Axis.horizontal,
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                   children: [
+//                     Column(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         SizedBox(width: size_phone.defualtsize!*5,),
+//                         Text(title,style: Text_Style().StyleFount(size: size_phone.defualtsize!*2, fountFamily: "body", color:ColorForm),)
+//
+//                       ],),
+// SizedBox(width: size_phone.defualtsize!*10,),
+//                     Column(
+//                         mainAxisAlignment: MainAxisAlignment.center,
+//                         children: [
+//                           Text((snapshots.data!.docs.length).toString(),style: Text_Style().StyleFount(size: size_phone.defualtsize!*2, fountFamily: "body", color: ColorForm),)
+//
+//
+//                         ]),
+//                   ],
+//                 ),
+//               ),
+
+            );
+          else
+            return Center(child:  CircularProgressIndicator(
+              strokeWidth: 4,
+              color: ColorForm,
+            ));
+        });
+  }
+
+  detatilPie(text,IconData icon) {
+    return Row(
+      children: [
+        Icon(icon),
+        SizedBox(width:10,),
+        Text(text,style:Text_Style().StyleFount(size: size_phone.defualtsize!*1.5, fountFamily: "body", color:ColorForm)),
+      ],
     );
   }
+
 }

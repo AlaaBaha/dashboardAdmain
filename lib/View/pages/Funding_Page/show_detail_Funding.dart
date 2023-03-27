@@ -114,7 +114,7 @@ class show_detail_fundingeState extends State<show_detail_funding> {
                 Alert_Config().Alert(fun: (){
                   Navigator.popAndPushNamed(context, RouteNames.Funding);
                   AddCourse_controller().EmailOpen(data['email_user'],'لقد تم الموافقة علي طلب تمويلك   قم بالتواصل معنا علي رقم  0987654321').whenComplete((){
-                    funding_controller().DeleteFunding(snapshots.data!.id, context);
+                   // funding_controller().DeleteFunding(snapshots.data!.id, context);
                   });
                 }, context: context, title: "هل تريد الموافقة على الطلب", type: CoolAlertType.warning);
               }),
@@ -123,7 +123,7 @@ class show_detail_fundingeState extends State<show_detail_funding> {
                         Alert_Config().Alert(fun: (){
                           Navigator.popAndPushNamed(context, RouteNames.Funding);
                           AddCourse_controller().EmailOpen(data['email_user'],'لقد رفض  طلب تمويلك  ').whenComplete((){
-                            funding_controller().DeleteFunding(snapshots.data!.id, context);
+                         funding_controller().DeleteFunding(snapshots.data!.id, context);
                           });
                         }, context: context, title: "هل تريد رفض الطلب", type: CoolAlertType.warning);
 

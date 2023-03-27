@@ -62,26 +62,27 @@ getCourseDetail(String id){
         title: 'فشل رفض الطلب ',);}
   }
   EmailOpen(String UserEmail,String title) async {
-  // final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
-  // const seviceid="service_cgohnol";
-  // const templateid="template_dxd01z9";
-  // const userid="oVguU9KJ0eizPA6b7";
-  //
-  // final reponend=await http.post(url,
-  //     headers: {'Content-Type':'application/json'},
-  //     body: json.encode({
-  //       "service_id":seviceid,
-  //       "template_id":templateid,
-  //       "user_id":userid,
-  //       "template_params":{
-  //         "name":"منصة تنوير  ",
-  //         "subject":"الرد على طلب مرسل ! ",
-  //         "message":title,
-  //         "user_email":UserEmail!
-  //       },
-  //       "accessToken":"I4n1w1XMb1_jlmzsIYgB6"}));
-  // reponend.statusCode;
-  // print(reponend.statusCode);
+    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+    const seviceid="service_tquibfb";
+    const templateid="template_5c1pizp";
+    const userid="RpmOL5n-OG1C_fx2Y";
+
+  final reponend=await http.post(url,
+      headers: {'Content-Type':'application/json'},
+      body: json.encode({
+        "service_id":seviceid,
+        "template_id":templateid,
+        "user_id":userid,
+        "template_params":{
+          "name":"منصة إنماء  ",
+          "subject":"الرد على طلب مرسل ! ",
+          "message":title,
+          "user_email":UserEmail!
+        },
+        "accessToken":"HMyW3xKrSf_CPpGYUmhiX"}));
+  reponend.statusCode;
+  print(reponend.statusCode);
+  print(reponend.body);
 
 
   }

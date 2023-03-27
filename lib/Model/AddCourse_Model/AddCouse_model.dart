@@ -13,20 +13,18 @@ class AddCouse_model{
    required String linked})async{
     try {
 
-      Reference reference=await firebase_storage.FirebaseStorage.instanceFor(bucket: "gs://smallproduct-87765.appspot.com").ref('Prov_user').child(nameFile);
+      Reference reference=await firebase_storage.FirebaseStorage.instanceFor(bucket: "gs://enmaa-d75bd.appspot.com").ref('cours').child(nameFile);
       final UploadTask upload=reference.putData(ImgFile!);
       upload.whenComplete(()async{
        String imageUrl=await upload.snapshot.ref.getDownloadURL();
         final res = await store.collection('courses').doc();
        Course_detail details = new Course_detail(link: linked, catalog: catalog, Name: Name, image: imageUrl);
        await res.set(details.toMap());
-        print('the fund success');
       });
 
       return true;
     }
     on FirebaseException catch(e){
-      print('the fund fail');
       return false;
     }
   }

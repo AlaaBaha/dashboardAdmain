@@ -17,11 +17,10 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await  Firebase.initializeApp(
     options: FirebaseOptions(
-        apiKey: "AIzaSyAwwCZ7e455aZofqO817xotzQhtnyw9oUo"
-        , appId:"1:1060213163950:web:8bdad6cbc338dffca9aa3f",
-        messagingSenderId:  "1060213163950",
-        projectId: "smallproduct-87765")
-  );
+        apiKey: "AIzaSyBKke-SKRNDAP_7cDWA0NX7YzJTs6nmF_8",
+         appId:"1:315962012314:web:a4a89e897fb3bf14afa523",
+        messagingSenderId: "315962012314",
+        projectId: "enmaa-d75bd",));
   runApp(
       MaterialApp(
         theme: ThemeData(
